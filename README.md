@@ -10,6 +10,9 @@ Project Jito is a tool crafted in Rust, designed to facilitate the redirection o
 This tool serves as a versatile intermediary, seamlessly transferring messages from various sources to designated channels on Discord or Slack, enhancing communication and integration within teams and communities.
 
 Whether used for real-time notifications, automated alerts, or collaborative messaging, Project Jito offers a flexible and scalable solution for enhancing communication dynamics across Discord and Slack platforms.
+
+**Btw, Jito gets around Discord's 2000 character limit 🤭.**
+
 ---
 ### Installation
 - You need to have `cargo` installed: https://rustup.rs
