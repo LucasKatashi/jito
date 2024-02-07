@@ -80,11 +80,7 @@ async fn sender(output: &str, content: &str, file: &str) {
     }
 
     if success {
-        match output {
-            "discord" => println!("Message sent to Discord"),
-            "slack" => println!("Message sent to Slack"),
-            _ => (),
-        }
+        println!("Message sent to {}", output);
     }
 }
 
