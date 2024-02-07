@@ -74,7 +74,7 @@ async fn main() -> io::Result<()> {
     let args = Arguments::parse();
     let mut buffer = String::new();
 
-    let _ = io::stdin().read_line(&mut buffer)?;
+    let _ = io::stdin().read_to_string(&mut buffer)?;
 
     sender(&args.output, &buffer, &args.file).await;
 
