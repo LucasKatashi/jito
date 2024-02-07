@@ -32,40 +32,59 @@ async fn sender(output: &str, content: &str, file: &str) {
     let webhooks = webhook_parser(&file).expect("Unable to parse webhooks");
     let client = reqwest::Client::new();
 
-    match output {
-        "discord" => {
-            let message = serde_json::json!({
-                "content": content
-            });
+    let chunks = content
+        .chars()
+        .collect::<Vec<char>>()
+        .chunks(2000)
+        .map(|c| c.iter().collect::<String>())
+        .collect::<Vec<String>>();
 
-            let res = client
-                .post(&webhooks.discord)
-                .header("Content-Type", "application/json")
-                .json(&message)
-                .send()
-                .await;
-            match res {
-                Ok(_) => println!("Message sent to Discord"),
-                Err(e) => eprintln!("Failed to send message to Discord: {}", e),
-            }
-        }
-        "slack" => {
-            let message = serde_json::json!({
-                "text": content
-            });
+    let mut success = true;
 
-            let res = client
-                .post(&webhooks.slack)
-                .header("Content-Type", "application/json")
-                .json(&message)
-                .send()
-                .await;
-            match res {
-                Ok(_) => println!("Message sent to Slack"),
-                Err(e) => eprintln!("Failed to send message to Slack: {}", e),
+    for chunk in chunks {
+        match output {
+            "discord" => {
+                let message = serde_json::json!({
+                    "content": chunk
+                });
+
+                let res = client
+                    .post(&webhooks.discord)
+                    .header("Content-Type", "application/json")
+                    .json(&message)
+                    .send()
+                    .await;
+                if let Err(e) = res {
+                    success = false;
+                    eprintln!("Failed to send message to Discord: {}", e);
+                }
             }
+            "slack" => {
+                let message = serde_json::json!({
+                    "text": chunk
+                });
+
+                let res = client
+                    .post(&webhooks.slack)
+                    .header("Content-Type", "application/json")
+                    .json(&message)
+                    .send()
+                    .await;
+                if let Err(e) = res {
+                    success = false;
+                    eprintln!("Failed to send message to Slack: {}", e);
+                }
+            }
+            _ => eprintln!("Invalid output"),
         }
-        _ => eprintln!("Invalid output"),
+    }
+
+    if success {
+        match output {
+            "discord" => println!("Message sent to Discord"),
+            "slack" => println!("Message sent to Slack"),
+            _ => (),
+        }
     }
 }
 
