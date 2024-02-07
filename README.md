@@ -13,9 +13,9 @@ Whether used for real-time notifications, automated alerts, or collaborative mes
 ---
 ### Installation
 - You need to have `cargo` installed: https://rustup.rs
-- Go to the `jito` directory and run:
+- Paste in terminal:
     ```sh
-    cargo run
+    git clone https://github.com/LucasKatashi/jito && cd jito && cargo run
     ```
 - The `jito` binary will be generated in `target/debug`
 
