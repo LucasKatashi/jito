@@ -1,0 +1,8 @@
+# Webhook addresses
+# Replace 'https://webhook_url' with your webhooks URLs
+
+# Discord webhook URL
+discord: https://webhook_url
+
+# Slack webhook URL
+slack: https://webhook_url
