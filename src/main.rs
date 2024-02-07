@@ -1,9 +1,9 @@
 use clap::Parser;
-use reqwest;
 use serde::Deserialize;
 use serde_yaml::Error;
 use std::fs::File;
 use std::io::{self, Read};
+use text_colorizer::*;
 
 #[derive(Debug, Parser)]
 struct Arguments {
@@ -56,7 +56,11 @@ async fn sender(output: &str, content: &str, file: &str) {
                     .await;
                 if let Err(e) = res {
                     success = false;
-                    eprintln!("Failed to send message to Discord: {}", e);
+                    eprintln!(
+                        "{} Failed to send message to Discord: {}",
+                        "[-]".red().bold(),
+                        e
+                    );
                 }
             }
             "slack" => {
@@ -72,15 +76,19 @@ async fn sender(output: &str, content: &str, file: &str) {
                     .await;
                 if let Err(e) = res {
                     success = false;
-                    eprintln!("Failed to send message to Slack: {}", e);
+                    eprintln!(
+                        "{} Failed to send message to Slack: {}",
+                        "[-]".red().bold(),
+                        e
+                    );
                 }
             }
-            _ => eprintln!("Invalid output"),
+            _ => eprintln!("{} Invalid output", "[-]".red().bold()),
         }
     }
 
     if success {
-        println!("Message sent to {}", output);
+        println!("{} Message sent to {}", "[+]".green().bold(), output);
     }
 }
 
