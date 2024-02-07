@@ -57,8 +57,8 @@ async fn sender(output: &str, content: &str, file: &str) {
                 if let Err(e) = res {
                     success = false;
                     eprintln!(
-                        "{} Failed to send message to Discord: {}",
-                        "[-]".red().bold(),
+                        "[{}] Failed to send message to Discord: {}",
+                        "-".red().bold(),
                         e
                     );
                 }
@@ -77,18 +77,18 @@ async fn sender(output: &str, content: &str, file: &str) {
                 if let Err(e) = res {
                     success = false;
                     eprintln!(
-                        "{} Failed to send message to Slack: {}",
-                        "[-]".red().bold(),
+                        "[{}] Failed to send message to Slack: {}",
+                        "-".red().bold(),
                         e
                     );
                 }
             }
-            _ => eprintln!("{} Invalid output", "[-]".red().bold()),
+            _ => eprintln!("[{}] Invalid output", "-".red().bold()),
         }
     }
 
     if success {
-        println!("{} Message sent to {}", "[+]".green().bold(), output);
+        println!("[{}] Message sent to {}", "+".green().bold(), output);
     }
 }
 
